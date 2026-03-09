@@ -256,47 +256,74 @@ body {
 /* Scroll Indicator */
 .scroll-indicator {
   position: absolute;
-  bottom: 2rem;
+  bottom: 3rem;
   left: 50%;
   transform: translateX(-50%);
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 0.75rem;
-  color: var(--text-muted);
-  font-size: 0.9rem;
-  animation: fade-in-up 1s ease 0.5s both;
+  gap: 0.5rem;
   cursor: pointer;
-  padding: 0.75rem 1.5rem;
-  border-radius: var(--radius-lg);
+  z-index: 20;
+  padding: 1rem 2rem;
+  border-radius: var(--radius-xl);
+  background: rgba(246, 214, 49, 0.08);
+  border: 2px solid rgba(246, 214, 49, 0.2);
   transition: all var(--transition-normal);
+  animation: scroll-indicator-appear 0.8s ease 1s both;
 }
 
 .scroll-indicator:hover {
-  color: var(--accent-yellow);
-  background: rgba(246, 214, 49, 0.1);
+  background: rgba(246, 214, 49, 0.15);
+  border-color: rgba(246, 214, 49, 0.4);
+  transform: translateX(-50%) scale(1.05);
 }
 
-.scroll-indicator:hover svg {
-  transform: scale(1.2);
+.scroll-text {
   color: var(--accent-yellow);
+  font-size: 0.95rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
 }
 
-.scroll-indicator svg {
-  width: 32px;
-  height: 32px;
+.scroll-arrow {
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(246, 214, 49, 0.15);
+  border-radius: 50%;
   animation: bounce-down 2s infinite;
-  transition: transform var(--transition-normal);
+  transition: all var(--transition-normal);
+}
+
+.scroll-indicator:hover .scroll-arrow {
+  background: rgba(246, 214, 49, 0.3);
+  transform: scale(1.1);
+}
+
+.scroll-arrow svg {
+  width: 24px;
+  height: 24px;
+  color: var(--accent-yellow);
 }
 
 @keyframes bounce-down {
-  0%, 100% { transform: translateY(0); opacity: 1; }
-  50% { transform: translateY(8px); opacity: 0.5; }
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(8px); }
 }
 
-@keyframes fade-in-up {
-  from { opacity: 0; transform: translateX(-50%) translateY(30px); }
-  to { opacity: 1; transform: translateX(-50%) translateY(0); }
+@keyframes scroll-indicator-appear {
+  from {
+    opacity: 0;
+    transform: translateX(-50%) translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
 }
 
 /* ========================================
