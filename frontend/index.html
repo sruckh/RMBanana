@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>RM Banana - Remove AI Watermarks</title>
+  
+  <!-- Favicon -->
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <link rel="manifest" href="/site.webmanifest">
+  
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Space+Grotesk:wght@600;700&display=swap" rel="stylesheet">
+  
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <!-- Hero Banner -->
+  <section class="hero">
+    <div class="hero-bg">
+      <div class="gradient-orb orb-1"></div>
+      <div class="gradient-orb orb-2"></div>
+      <div class="gradient-orb orb-3"></div>
+    </div>
+    
+    <div class="hero-content">
+      <div class="logo-container">
+        <div class="logo-glow"></div>
+        <img src="logo.svg" alt="RM Banana Logo" class="hero-logo">
+      </div>
+      
+      <h1 class="hero-title">
+        <span class="title-rm">RM</span>
+        <span class="title-banana">Banana</span>
+      </h1>
+      
+      <p class="hero-tagline">
+        Remove invisible AI watermarks from Gemini-generated images
+      </p>
+      
+      <div class="hero-badges">
+        <span class="badge">
+          <span class="badge-icon">⚡</span>
+          Instant Processing
+        </span>
+        <span class="badge">
+          <span class="badge-icon">🔒</span>
+          100% Private
+        </span>
+        <span class="badge">
+          <span class="badge-icon">🎯</span>
+          Pixel Perfect
+        </span>
+      </div>
+      
+      <div class="scroll-indicator">
+        <span>Get Started</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M12 5v14M19 12l-7 7-7-7"/>
+        </svg>
+      </div>
+    </div>
+  </section>
+
+  <!-- Main App Section -->
+  <main class="app-section">
+    <div class="container">
+      <!-- Upload Section -->
+      <section class="upload-section" id="uploadSection">
+        <div class="section-header">
+          <h2>Upload Your Image</h2>
+          <p>Drag & drop or click to select a Gemini-generated image</p>
+        </div>
+        
+        <div class="dropzone" id="dropzone">
+          <div class="dropzone-content">
+            <div class="upload-icon">
+              <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <rect x="8" y="20" width="48" height="36" rx="4" stroke="currentColor" stroke-width="3"/>
+                <path d="M8 28L32 42L56 28" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+                <circle cx="44" cy="16" r="8" fill="currentColor"/>
+                <path d="M20 12H32" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+              </svg>
+            </div>
+            <h3>Drop your image here</h3>
+            <p class="browse-text">or <span class="browse-link">click to browse</span></p>
+            <p class="formats">PNG, JPEG, WebP • Max 10MB</p>
+          </div>
+          <input type="file" id="fileInput" accept="image/png,image/jpeg,image/jpg,image/webp" hidden>
+        </div>
+      </section>
+
+      <!-- Preview Section (hidden initially) -->
+      <section class="preview-section hidden" id="previewSection">
+        <div class="section-header">
+          <h2>Preview & Process</h2>
+          <p>Review your image and remove the watermark</p>
+        </div>
+        
+        <div class="image-comparison">
+          <div class="image-box">
+            <div class="image-label">
+              <span class="label-tag original">Original</span>
+            </div>
+            <div class="image-container">
+              <img id="originalImage" src="" alt="Original">
+            </div>
+          </div>
+          
+          <div class="comparison-arrow">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M5 12h14M12 5l7 7-7 7"/>
+            </svg>
+          </div>
+          
+          <div class="image-box">
+            <div class="image-label">
+              <span class="label-tag cleaned">Cleaned</span>
+            </div>
+            <div class="image-container" id="outputContainer">
+              <div class="processing-overlay" id="processingOverlay">
+                <div class="spinner-ring">
+                  <div></div>
+                  <div></div>
+                  <div></div>
+                  <div></div>
+                </div>
+                <p>Removing watermark...</p>
+                <span class="processing-hint">Using reverse alpha blending</span>
+              </div>
+              <img id="outputImage" src="" alt="Cleaned" class="hidden">
+            </div>
+          </div>
+        </div>
+
+        <div class="actions">
+          <button class="btn btn-primary" id="processBtn">
+            <span class="btn-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M12 3v18M3 12h18M7 7l10 10M7 17L17 7"/>
+              </svg>
+            </span>
+            Remove Watermark
+          </button>
+          
+          <button class="btn btn-secondary" id="downloadBtn" disabled>
+            <span class="btn-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3"/>
+              </svg>
+            </span>
+            Download
+          </button>
+          
+          <button class="btn btn-ghost" id="resetBtn">
+            <span class="btn-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M3 12a9 9 0 109-9 9.75 9.75 0 00-6.74 2.74L3 8M3 3v5h5"/>
+              </svg>
+            </span>
+            New Image
+          </button>
+        </div>
+
+        <div class="status hidden" id="status"></div>
+      </section>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer>
+    <div class="footer-content">
+      <div class="footer-brand">
+        <img src="logo.svg" alt="RM Banana" class="footer-logo">
+        <span>RM Banana</span>
+      </div>
+      <p class="footer-text">
+        Powered by <a href="https://github.com/denuwanpro/removebanana" target="_blank">RemoveBanana</a>
+        • Works with Gemini, Imagen 2/3, Nano Banana
+      </p>
+    </div>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>
