@@ -1,64 +1,58 @@
-# 🍌 RM Banana Web UI
+# RM Banana Web UI
 
-A Dockerized web interface for removing invisible AI watermarks from Google Gemini-generated images.
+[![Docker](https://img.shields.io/badge/Docker-Ready-2496ED?logo=docker&logoColor=white)](https://www.docker.com/)
+[![Node.js](https://img.shields.io/badge/Node.js-20-339933?logo=node.js&logoColor=white)](https://nodejs.org/)
+[![Express](https://img.shields.io/badge/Express-4.18-000000?logo=express&logoColor=white)](https://expressjs.com/)
+[![License](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 
-> **💝 Credit:** This project is a Dockerized Web UI wrapper around the excellent [removebanana](https://github.com/denuwanpro/removebanana) npm package by [Denuwan Thilakarathna](https://github.com/denuwanpro). All watermark removal logic and algorithms are from the upstream project.
+> A Dockerized web interface for removing invisible AI watermarks from Google Gemini-generated images.
+
+RM Banana provides a clean, modern web UI for the [removebanana](https://github.com/denuwanpro/removebanana) library. All processing happens locally in your Docker environment with complete privacy.
 
 **Upstream Project:** https://github.com/denuwanpro/removebanana
+
+## Features
+
+- **Drag & Drop Interface** - Easy image upload with visual feedback
+- **Privacy First** - All processing happens locally in your Docker environment
+- **Mathematical Precision** - Uses inverse alpha blending (no AI guessing)
+- **Responsive Design** - Works on desktop and mobile devices
+- **NPM Integration** - Designed to work with existing Nginx Proxy Manager setups
+- **Health Checks** - Built-in container health monitoring
+
+## Architecture
+
+![Architecture Diagram](./docs/diagrams/architecture.svg)
+
+> See [docs/diagrams/](./docs/diagrams/) for editable `.drawio` source files.
 
 ## Prerequisites
 
 - Docker & Docker Compose installed
 - Existing Nginx Proxy Manager on the `shared_net` Docker network
 
-## Features
-
-- 🖼️ **Drag & Drop Interface** - Easy image upload with drag and drop support
-- 🔒 **Privacy First** - All processing happens locally in your Docker environment
-- 🚀 **Fast Processing** - Uses mathematical inverse of Google's alpha blending (no AI guessing)
-- 📱 **Responsive Design** - Works on desktop and mobile
-- 🔗 **External NPM Integration** - Works with your existing Nginx Proxy Manager
-
-## Architecture
-
-```
-┌─────────────────────────────────────────────────────────────┐
-│                     Existing Infrastructure                  │
-│                                                              │
-│  ┌──────────────────────────────────────────────────────┐   │
-│  │           Nginx Proxy Manager (Existing)              │   │
-│  │              Ports 80, 443 exposed                    │   │
-│  └─────────────────────┬────────────────────────────────┘   │
-│                        │                                     │
-│                        ▼                                     │
-│  ┌──────────────────────────────────────────────────────┐   │
-│  │              shared_net (External Network)            │   │
-│  │                                                      │   │
-│  │   ┌─────────────────┐    ┌──────────────────────┐   │   │
-│  │   │  removebanana   │◄───┤  Other services...   │   │   │
-│  │   │  Port: 3000     │    │                      │   │   │
-│  │   │  (no host port) │    └──────────────────────┘   │   │
-│  │   └─────────────────┘                               │   │
-│  └──────────────────────────────────────────────────────┘   │
-└─────────────────────────────────────────────────────────────┘
-```
-
 ## Quick Start
 
-### 1. Start the Container
+### 1. Clone & Start
 
 ```bash
-cd /opt/docker/rmbanana
+git clone https://github.com/yourusername/rmbanana.git
+cd rmbanana
+
+# Create shared network if not exists
+docker network create shared_net
+
+# Start the container
 docker-compose up -d
 ```
 
 ### 2. Configure in Nginx Proxy Manager
 
-In your existing Nginx Proxy Manager admin panel:
+In your NPM admin panel:
 
 1. Go to **Hosts** → **Proxy Hosts** → **Add Proxy Host**
 2. Configure:
-   - **Domain Names**: `removebanana.yourdomain.com` (or your preferred domain)
+   - **Domain Names**: `removebanana.yourdomain.com`
    - **Scheme**: `http`
    - **Forward Hostname / IP**: `removebanana`
    - **Forward Port**: `3000`
@@ -67,22 +61,19 @@ In your existing Nginx Proxy Manager admin panel:
 
 ### 3. Access the Application
 
-Visit your configured domain: `https://removebanana.yourdomain.com`
+Visit: `https://removebanana.yourdomain.com`
 
 ## Usage
 
-1. **Upload Image**: Drag and drop or click to select a PNG, JPEG, or WebP image
-2. **Remove Watermark**: Click the "✨ Remove Watermark" button
-3. **Download**: Once processing is complete, click "⬇️ Download" to save the cleaned image
-
-## Supported AI Image Sources
-
-- ✅ Google Gemini (all versions)
-- ✅ Imagen 2
-- ✅ Imagen 3
-- ✅ Nano Banana AI
+1. **Upload** - Drag and drop or click to select a PNG, JPEG, or WebP image
+2. **Process** - Click "Remove Watermark" to process the image
+3. **Download** - Save the cleaned image to your device
 
 ## How It Works
+
+![Data Flow Diagram](./docs/diagrams/data-flow.svg)
+
+The watermark removal uses a mathematical inverse of Google's alpha blending:
 
 ```
 Google's watermarking:
@@ -92,7 +83,58 @@ RemoveBanana reversal:
   original = (watermarked - α × logo) / (1 - α)
 ```
 
-No AI guessing - pure mathematical reconstruction of the original pixels.
+No AI or machine learning is involved - it's pure mathematical reconstruction of the original pixels.
+
+## Supported AI Image Sources
+
+| Source | Support |
+|--------|---------|
+| Google Gemini (all versions) | Full |
+| Imagen 2 | Full |
+| Imagen 3 | Full |
+| Nano Banana AI | Full |
+
+## API Reference
+
+| Endpoint | Method | Description |
+|----------|--------|-------------|
+| `/api/health` | GET | Health check endpoint |
+| `/api/remove-watermark` | POST | Upload and process an image |
+| `/api/download/:id` | GET | Download processed image |
+
+### Example: Remove Watermark
+
+```bash
+curl -X POST http://localhost:3000/api/remove-watermark \
+  -F "image=@watermarked-image.png"
+```
+
+Response:
+```json
+{
+  "success": true,
+  "downloadUrl": "/api/download/abc123",
+  "filename": "cleaned-image.png",
+  "meta": {
+    "width": 1024,
+    "height": 1024
+  }
+}
+```
+
+### Example: Health Check
+
+```bash
+curl http://localhost:3000/api/health
+```
+
+Response:
+```json
+{
+  "status": "healthy",
+  "timestamp": "2024-01-15T10:30:00.000Z"
+}
+```
 
 ## Configuration
 
@@ -126,10 +168,31 @@ rmbanana/
 ├── frontend/
 │   ├── index.html        # Main HTML
 │   ├── styles.css        # Styles
-│   └── app.js            # Frontend logic
+│   ├── app.js            # Frontend logic
+│   └── logo.svg          # Logo asset
+├── docs/
+│   └── diagrams/         # Architecture diagrams
 ├── Dockerfile            # Container build
 ├── docker-compose.yml    # Service orchestration
 └── README.md             # This file
+```
+
+## Development
+
+### Local Development
+
+```bash
+# Install dependencies
+cd backend && npm install
+
+# Start the server
+npm start
+```
+
+### Building the Docker Image
+
+```bash
+docker build -t rmbanana .
 ```
 
 ## Maintenance
@@ -212,6 +275,16 @@ docker-compose up -d
 - Temporary files are auto-deleted after 5 minutes
 - No data persists between restarts
 
+## Contributing
+
+Contributions are welcome! Please feel free to submit a Pull Request.
+
+1. Fork the repository
+2. Create your feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
+
 ## Credits
 
 - **Watermark Removal Engine:** [removebanana](https://github.com/denuwanpro/removebanana) by [Denuwan Thilakarathna](https://github.com/denuwanpro)
@@ -219,8 +292,8 @@ docker-compose up -d
 
 ## License
 
-MIT © [RemoveBanana](https://github.com/denuwanpro/removebanana)
+MIT License - see the [LICENSE](LICENSE) file for details.
 
 ---
 
-**🍌 Made with love by the RemoveBanana community**
+Made with care for privacy-conscious users who want control over their AI-generated images.

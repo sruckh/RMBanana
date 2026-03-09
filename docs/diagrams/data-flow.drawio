@@ -1,0 +1,92 @@
+<mxGraphModel>
+  <root>
+    <mxCell id="0"/>
+    <mxCell id="1" parent="0"/>
+    
+    <!-- Title -->
+    <mxCell id="title" value="Watermark Removal Data Flow" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontStyle=1;fontSize=16;" vertex="1" parent="1">
+      <mxGeometry x="250" y="20" width="260" height="30" as="geometry"/>
+    </mxCell>
+    
+    <!-- Step 1: Upload -->
+    <mxCell id="step1" value="1. Image Upload" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontStyle=1;fontSize=12;" vertex="1" parent="1">
+      <mxGeometry x="40" y="80" width="140" height="50" as="geometry"/>
+    </mxCell>
+    <mxCell id="upload-detail" value="Drag/drop or click&#xa;PNG, JPEG, WebP&#xa;Max 10MB" style="text;html=1;strokeColor=#6c8ebf;fillColor=#dae8fc;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=1;fontSize=10;" vertex="1" parent="1">
+      <mxGeometry x="40" y="135" width="140" height="50" as="geometry"/>
+    </mxCell>
+    
+    <!-- Arrow 1 -->
+    <mxCell id="arrow1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#666666;strokeWidth=2;endArrow=classic;" edge="1" parent="1">
+      <mxGeometry relative="1" as="geometry">
+        <mxPoint x="180" y="105" as="sourcePoint"/>
+        <mxPoint x="230" y="105" as="targetPoint"/>
+      </mxGeometry>
+    </mxCell>
+    
+    <!-- Step 2: Server Receive -->
+    <mxCell id="step2" value="2. Server Receive" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontStyle=1;fontSize=12;" vertex="1" parent="1">
+      <mxGeometry x="230" y="80" width="140" height="50" as="geometry"/>
+    </mxCell>
+    <mxCell id="server-detail" value="Multer middleware&#xa;Validates file type&#xa;Saves to uploads/" style="text;html=1;strokeColor=#6c8ebf;fillColor=#dae8fc;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=1;fontSize=10;" vertex="1" parent="1">
+      <mxGeometry x="230" y="135" width="140" height="50" as="geometry"/>
+    </mxCell>
+    
+    <!-- Arrow 2 -->
+    <mxCell id="arrow2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#666666;strokeWidth=2;endArrow=classic;" edge="1" parent="1">
+      <mxGeometry relative="1" as="geometry">
+        <mxPoint x="370" y="105" as="sourcePoint"/>
+        <mxPoint x="420" y="105" as="targetPoint"/>
+      </mxGeometry>
+    </mxCell>
+    
+    <!-- Step 3: Process -->
+    <mxCell id="step3" value="3. Watermark Removal" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;fontStyle=1;fontSize=12;" vertex="1" parent="1">
+      <mxGeometry x="420" y="80" width="140" height="50" as="geometry"/>
+    </mxCell>
+    <mxCell id="process-detail" value="RemoveBanana lib&#xa;Canvas processing&#xa;Alpha blending inverse" style="text;html=1;strokeColor=#d79b00;fillColor=#ffe6cc;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=1;fontSize=10;" vertex="1" parent="1">
+      <mxGeometry x="420" y="135" width="140" height="50" as="geometry"/>
+    </mxCell>
+    
+    <!-- Arrow 3 -->
+    <mxCell id="arrow3" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#666666;strokeWidth=2;endArrow=classic;" edge="1" parent="1">
+      <mxGeometry relative="1" as="geometry">
+        <mxPoint x="560" y="105" as="sourcePoint"/>
+        <mxPoint x="610" y="105" as="targetPoint"/>
+      </mxGeometry>
+    </mxCell>
+    
+    <!-- Step 4: Output -->
+    <mxCell id="step4" value="4. Output Save" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontStyle=1;fontSize=12;" vertex="1" parent="1">
+      <mxGeometry x="610" y="80" width="140" height="50" as="geometry"/>
+    </mxCell>
+    <mxCell id="output-detail" value="Save to outputs/&#xa;Generate unique ID&#xa;Return download URL" style="text;html=1;strokeColor=#82b366;fillColor=#d5e8d4;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=1;fontSize=10;" vertex="1" parent="1">
+      <mxGeometry x="610" y="135" width="140" height="50" as="geometry"/>
+    </mxCell>
+    
+    <!-- Arrow 4 (down) -->
+    <mxCell id="arrow4" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#666666;strokeWidth=2;endArrow=classic;" edge="1" parent="1">
+      <mxGeometry relative="1" as="geometry">
+        <mxPoint x="680" y="185" as="sourcePoint"/>
+        <mxPoint x="680" y="230" as="targetPoint"/>
+      </mxGeometry>
+    </mxCell>
+    
+    <!-- Step 5: Download -->
+    <mxCell id="step5" value="5. Download" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontStyle=1;fontSize=12;" vertex="1" parent="1">
+      <mxGeometry x="610" y="230" width="140" height="50" as="geometry"/>
+    </mxCell>
+    <mxCell id="download-detail" value="GET /api/download/:id&#xa;Browser downloads&#xa;Clean image file" style="text;html=1;strokeColor=#82b366;fillColor=#d5e8d4;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=1;fontSize=10;" vertex="1" parent="1">
+      <mxGeometry x="610" y="285" width="140" height="50" as="geometry"/>
+    </mxCell>
+    
+    <!-- Algorithm Box -->
+    <mxCell id="algo-box" value="Watermark Algorithm" style="swimlane;horizontal=1;startSize=25;fillColor=#f8cecc;strokeColor=#b85450;fontStyle=1;" vertex="1" parent="1">
+      <mxGeometry x="40" y="230" width="520" height="105" as="geometry"/>
+    </mxCell>
+    <mxCell id="algo-content" value="Google's Watermarking: watermarked = α × logo + (1 - α) × original&#xa;&#xa;RemoveBanana Reversal: original = (watermarked - α × logo) / (1 - α)&#xa;&#xa;✓ No AI guessing - pure mathematical reconstruction" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontFamily=Courier New;fontSize=11;" vertex="1" parent="algo-box">
+      <mxGeometry x="10" y="30" width="500" height="70" as="geometry"/>
+    </mxCell>
+    
+  </root>
+</mxGraphModel>
